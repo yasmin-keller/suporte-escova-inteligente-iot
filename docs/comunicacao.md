@@ -2,7 +2,16 @@
 
 ## Visão geral
 
-![Arquitetura de comunicação](img/arquitetura-mqtt.png)
+```mermaid
+flowchart LR
+    subgraph Suporte inteligente
+        S[Chave fim de curso<br/>GPIO 4] -- wake-up EXT0 --> E[ESP32<br/>cliente MQTT / publisher]
+        E -- saídas digitais --> A[LED RGB GPIO 25/26/27<br/>Buzzer GPIO 14]
+    end
+    E -- Wi-Fi / TCP/IP --> R[Roteador<br/>WLAN 2,4 GHz]
+    R -- Internet<br/>PUBLISH --> B[Broker MQTT<br/>broker.hivemq.com:1883]
+    B -- SUBSCRIBE<br/>mesmo tópico --> C[Cliente assinante<br/>HiveMQ WebSocket Client]
+```
 
 O dispositivo se comunica com a internet em duas camadas:
 
@@ -68,7 +77,7 @@ Também é possível usar qualquer cliente MQTT de linha de comando, por exemplo
 mosquitto_sub -h broker.hivemq.com -p 1883 -t mackenzie/gabrielyasmin/escova -v
 ```
 
-![Mensagem recebida no cliente da HiveMQ](img/hivemq-mensagem-recebida.png)
+![Mensagem recebida no cliente da HiveMQ](img/hivemq-mensagem-recebida.jpg)
 
 ## Limitações e melhorias previstas
 

@@ -14,7 +14,26 @@
 
 O firmware é orientado a eventos. Em vez de repetir um `loop()`, o programa executa uma única sequência dentro do `setup()` e termina colocando o chip em *deep sleep*. Ao acordar, o ESP32 reinicia e executa o `setup()` de novo; a função `esp_sleep_get_wakeup_cause()` informa se ele acordou pela retirada da escova (EXT0) ou se foi a primeira energização.
 
-![Fluxograma](img/fluxograma.png)
+```mermaid
+flowchart TD
+    A([Início / energia ligada]) --> B{Acordou pelo GPIO 4?<br/>wake-up EXT0}
+    B -- não, 1ª energização --> K{Escova no suporte?<br/>GPIO 4 em HIGH}
+    B -- sim --> C[Escova retirada:<br/>chave fim de curso leva o GPIO 4 a LOW]
+    C --> D[Temporizador de 2 min<br/>LED RGB azul pisca a cada 500 ms]
+    D --> E{Tempo atingido?}
+    E -- não --> D
+    E -- sim --> F[LED apaga e buzzer<br/>toca por 1 s]
+    F --> G[Liga o Wi-Fi<br/>TCP/IP 2,4 GHz]
+    G --> H[Conecta ao broker MQTT<br/>broker.hivemq.com:1883]
+    H --> I{Conectado?}
+    I -- não --> J[Aguarda 5 s] --> H
+    I -- sim --> P[Publica JSON no tópico<br/>mackenzie/gabrielyasmin/escova]
+    P --> Q[Desconecta do broker<br/>e desliga o Wi-Fi]
+    Q --> K
+    K -- não --> L[Aguarda 100 ms] --> K
+    K -- sim --> M[Deep sleep<br/>GPIO 4 armado para despertar]
+    M -. escova retirada .-> B
+```
 
 ## Constantes de configuração
 

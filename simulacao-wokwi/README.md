@@ -18,5 +18,3 @@ Versão do projeto usada nos testes e no vídeo de demonstração.
 2. Clique em **Start Simulation** e aguarde a mensagem de repouso no monitor serial.
 3. Assine o tópico `mackenzie/gabrielyasmin/escova` no cliente <https://www.hivemq.com/demos/websocket-client/>.
 4. Pressione o botão verde (equivale a retirar a escova). O LED pisca em azul por 10 segundos, o buzzer toca e a mensagem é publicada.
-
-![Simulação em execução](../docs/img/simulacao-wokwi-serial.png)

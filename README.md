@@ -19,7 +19,26 @@ O projeto é um suporte de parede para escova de dentes que orienta o usuário a
 5. O ESP32 liga o Wi-Fi, conecta ao broker MQTT e publica o registro da escovação.
 6. Em seguida desliga o Wi-Fi, espera a escova ser devolvida ao suporte e volta a dormir.
 
-![Fluxograma de funcionamento](docs/img/fluxograma.png)
+```mermaid
+flowchart TD
+    A([Início / energia ligada]) --> B{Acordou pelo GPIO 4?<br/>wake-up EXT0}
+    B -- não, 1ª energização --> K{Escova no suporte?<br/>GPIO 4 em HIGH}
+    B -- sim --> C[Escova retirada:<br/>chave fim de curso leva o GPIO 4 a LOW]
+    C --> D[Temporizador de 2 min<br/>LED RGB azul pisca a cada 500 ms]
+    D --> E{Tempo atingido?}
+    E -- não --> D
+    E -- sim --> F[LED apaga e buzzer<br/>toca por 1 s]
+    F --> G[Liga o Wi-Fi<br/>TCP/IP 2,4 GHz]
+    G --> H[Conecta ao broker MQTT<br/>broker.hivemq.com:1883]
+    H --> I{Conectado?}
+    I -- não --> J[Aguarda 5 s] --> H
+    I -- sim --> P[Publica JSON no tópico<br/>mackenzie/gabrielyasmin/escova]
+    P --> Q[Desconecta do broker<br/>e desliga o Wi-Fi]
+    Q --> K
+    K -- não --> L[Aguarda 100 ms] --> K
+    K -- sim --> M[Deep sleep<br/>GPIO 4 armado para despertar]
+    M -. escova retirada .-> B
+```
 
 ### Como reproduzir
 
@@ -96,7 +115,16 @@ Especificações completas em [`docs/hardware.md`](docs/hardware.md).
 
 ## 4. Comunicação: TCP/IP e MQTT
 
-![Arquitetura de comunicação](docs/img/arquitetura-mqtt.png)
+```mermaid
+flowchart LR
+    subgraph Suporte inteligente
+        S[Chave fim de curso<br/>GPIO 4] -- wake-up EXT0 --> E[ESP32<br/>cliente MQTT / publisher]
+        E -- saídas digitais --> A[LED RGB GPIO 25/26/27<br/>Buzzer GPIO 14]
+    end
+    E -- Wi-Fi / TCP/IP --> R[Roteador<br/>WLAN 2,4 GHz]
+    R -- Internet<br/>PUBLISH --> B[Broker MQTT<br/>broker.hivemq.com:1883]
+    B -- SUBSCRIBE<br/>mesmo tópico --> C[Cliente assinante<br/>HiveMQ WebSocket Client]
+```
 
 | Item | Valor |
 |---|---|
@@ -117,7 +145,7 @@ Exemplo de mensagem publicada:
 
 O ESP32 só liga o Wi-Fi depois do fim da escovação, publica a mensagem e desliga o rádio logo em seguida. Por isso ele não assina nenhum tópico: manter o rádio ligado esperando mensagens consumiria a bateria.
 
-![Mensagem recebida no cliente da HiveMQ](docs/img/hivemq-mensagem-recebida.png)
+![Mensagem recebida no cliente da HiveMQ](docs/img/hivemq-mensagem-recebida.jpg)
 
 Detalhes em [`docs/comunicacao.md`](docs/comunicacao.md).
 

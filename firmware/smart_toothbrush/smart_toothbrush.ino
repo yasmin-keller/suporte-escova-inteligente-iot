@@ -23,7 +23,7 @@ PubSubClient client(espClient);
 
 // Parâmetro de Saúde Bucal (ODS 3)
 // Configurado para 120.000 ms (2 minutos). Reduzir na demonstração em vídeo.
-const int TEMPO_ESCOVACAO = 120000; 
+const int TEMPO_ESCOVACAO = 120000;
 
 void setup_wifi() {
   Serial.print("Estabelecendo conexão TCP/IP com: ");
@@ -41,7 +41,7 @@ void reconnect() {
     Serial.print("Negociando conexão com Broker MQTT...");
     String clientId = "ESP32-Holder-";
     clientId += String(random(0xffff), HEX);
-    
+
     if (client.connect(clientId.c_str())) {
       Serial.println("Conexão MQTT bem-sucedida!");
     } else {
@@ -75,7 +75,7 @@ void setup() {
 
   if (wakeup_reason == ESP_SLEEP_WAKEUP_EXT0) {
     Serial.println("Interrupção Externa (EXT0): Escova removida do suporte.");
-    
+
     // Início do ciclo de escovação guiado
     unsigned long startTime = millis();
     unsigned long lastBlink = 0;
@@ -89,10 +89,10 @@ void setup() {
       }
       yield(); // Manutenção preventiva do Watchdog Timer
     }
-    
+
     digitalWrite(LED_B, LOW);
     Serial.println("Tempo de higienização atingido.");
-    
+
     // Feedback sonoro de conclusão
     digitalWrite(BUZZER_PIN, HIGH);
     delay(1000);
@@ -109,7 +109,7 @@ void setup() {
       Serial.println("Telemetria MQTT publicada: " + payload);
       delay(500);
     }
-    
+
     // Desativa módulo de rádio para isolamento energético
     client.disconnect();
     WiFi.disconnect(true);
@@ -126,12 +126,12 @@ void setup() {
 
   Serial.println("Armando gatilho de Wake-up no GPIO 4. Ingressando em Deep Sleep...");
   // Configura a interrupção externa 0 para acordar o chip quando o pino 4 for aterrado (LOW)
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 0); 
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 0);
   delay(100);
   esp_deep_sleep_start();
 }
 
 void loop() {
-  // O loop principal é inoperante. A arquitetura é baseada inteiramente 
+  // O loop principal é inoperante. A arquitetura é baseada inteiramente
   // em interrupções de hardware e hibernação na função setup().
 }
