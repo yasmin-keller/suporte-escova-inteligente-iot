@@ -1,6 +1,6 @@
 # Suporte Inteligente para Escova de Dentes (ESP32 + MQTT)
 
-Projeto final da disciplina de Internet das Coisas — Faculdade de Computação e Informática (FCI), Universidade Presbiteriana Mackenzie.
+Projeto final da disciplina de Objetos Inteligentes Conectados — Faculdade de Computação e Informática (FCI), Universidade Presbiteriana Mackenzie.
 
 **Autores:** Gabriel Oliveira Sarmento e Yasmin Keller
 
