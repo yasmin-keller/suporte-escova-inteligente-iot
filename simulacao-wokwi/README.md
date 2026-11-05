@@ -2,7 +2,7 @@
 
 Versão do projeto usada nos testes e no vídeo de demonstração.
 
-**Projeto no Wokwi:** LINK_DO_WOKWI
+**Projeto no Wokwi:** https://wokwi.com/projects/479811130542022657
 
 ## Arquivos
 
@@ -10,7 +10,7 @@ Versão do projeto usada nos testes e no vídeo de demonstração.
 |---|---|
 | `sketch.ino` | Código da simulação |
 | `diagram.json` | Circuito (ESP32, LED RGB, resistores, buzzer e botão) |
-| `libraries.txt` | Bibliotecas usadas pelo Wokwi (`PubSubClient`) |
+| `libraries.txt` | Bibliotecas usadas pelo Wokwi (`PubSubClient` e `WiFiManager`) |
 
 ## Como executar
 

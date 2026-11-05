@@ -4,7 +4,9 @@ Projeto final da disciplina de Internet das Coisas — Faculdade de Computação
 
 **Autores:** Gabriel Oliveira Sarmento e Yasmin Keller
 
-**Vídeo de demonstração:** LINK_DO_YOUTUBE
+**Vídeo de demonstração:** https://youtu.be/2IL4a8Cc4B0
+
+**Simulação no Wokwi:** https://wokwi.com/projects/479811130542022657
 
 O projeto é um suporte de parede para escova de dentes que orienta o usuário a escovar pelo tempo recomendado de 2 minutos e registra cada escovação na nuvem pelo protocolo MQTT. O histórico de uso permite estimar quando a escova deve ser trocada (ciclo de referência de 90 dias). A proposta está alinhada ao Objetivo de Desenvolvimento Sustentável 3 da ONU (Saúde e Bem-Estar).
 
@@ -44,7 +46,7 @@ flowchart TD
 
 **Opção A — Simulação no Wokwi (sem hardware)**
 
-1. Acesse o projeto no Wokwi (ver pasta [`simulacao-wokwi/`](simulacao-wokwi/)) ou crie um projeto ESP32 em <https://wokwi.com> e copie os arquivos `sketch.ino`, `diagram.json` e `libraries.txt` dessa pasta.
+1. Abra o projeto em <https://wokwi.com/projects/479811130542022657> (os arquivos também estão na pasta [`simulacao-wokwi/`](simulacao-wokwi/)) ou crie um projeto ESP32 em <https://wokwi.com> e copie os arquivos `sketch.ino`, `diagram.json` e `libraries.txt` dessa pasta.
 2. Clique em **Start Simulation**. O Wokwi conecta automaticamente à rede virtual `Wokwi-GUEST`.
 3. Abra em outra aba o cliente MQTT web da HiveMQ: <https://www.hivemq.com/demos/websocket-client/>.
 4. Clique em **Connect**, depois em **Add New Topic Subscription** e assine o tópico `mackenzie/gabrielyasmin/escova`.

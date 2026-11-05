@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "author": "GY",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 9.7,
+      "left": 121.5,
+      "rotate": 270,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "rgb1",
+      "top": -15.2,
+      "left": -142.9,
+      "attrs": { "common": "cathode" }
+    },
+    { "type": "wokwi-buzzer", "id": "bz1", "top": -103.2, "left": 21, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 52.25,
+      "left": -87.8,
+      "rotate": 180,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 71.45,
+      "left": -87.8,
+      "rotate": 180,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 90.65,
+      "left": -97.4,
+      "rotate": 180,
+      "attrs": { "value": "330" }
+    }
+  ],
+  "connections": [
+    [ "esp:4", "btn1:1.l", "green", [ "h24.04", "v92.7" ] ],
+    [ "esp:14", "bz1:1", "purple", [ "h-14.21", "v-153.6" ] ],
+    [ "esp:GND.2", "bz1:2", "black", [ "v-28.8", "h-4.76", "v-19.2" ] ],
+    [ "esp:25", "r1:1", "red", [ "h-23.81", "v-19.2" ] ],
+    [ "r1:2", "rgb1:R", "red", [ "h-46.8", "v-28.8" ] ],
+    [ "esp:26", "r2:1", "green", [ "h-33.41", "v-38.4" ] ],
+    [ "r2:2", "rgb1:G", "green", [ "h-27.6", "v-48" ] ],
+    [ "esp:27", "r3:1", "blue", [ "h-43.01", "v-28.8" ] ],
+    [ "r3:2", "rgb1:B", "blue", [ "h-8.4", "v-67.2" ] ],
+    [ "esp:GND.3", "btn1:2.l", "black", [ "h62.24" ] ],
+    [ "rgb1:COM", "esp:GND.1", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
